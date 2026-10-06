@@ -1,2 +1,436 @@
 # cqjtu
 重庆交通大学校史记录
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>重庆交通大学校史交互展</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+  background:#003366;
+  color:#ffffff;
+  font-family:"微软雅黑",sans-serif;
+  padding:24px 12px;
+}
+.wrap{
+  max-width:850px;
+  margin:0 auto;
+}
+h1{
+  text-align:center;
+  margin-bottom:32px;
+  font-size:26px;
+}
+.tabs{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  justify-content:center;
+  margin-bottom:24px;
+}
+.tab-btn{
+  padding:9px 22px;
+  border-radius:30px;
+  border:1px solid rgba(255,255,255,0.3);
+  background:rgba(255,255,255,0.12);
+  color:#fff;
+  cursor:pointer;
+  transition:0.25s;
+}
+.tab-btn.active{
+  background:#ffffff;
+  color:#003366;
+  font-weight:bold;
+}
+.box{
+  background:rgba(255,255,255,0.08);
+  border-radius:18px;
+  padding:30px;
+  border:1px solid rgba(255,255,255,0.18);
+}
+.panel{
+  display:none;
+  line-height:2;
+  font-size:16px;
+}
+.panel.show{
+  display:block;
+}
+h2{
+  color:#ffdd88;
+  margin-bottom:16px;
+  font-size:22px;
+}
+img{
+  width:100%;
+  border-radius:12px;
+  margin-bottom:18px;
+  cursor:pointer;
+}
+/* 所有p标签首行空两汉字 */
+p{
+  text-indent:2em;
+}
+
+/* ==========时间轴========== */
+.timeline-wrap{
+  position:relative;
+  padding-left:32px;
+  margin-top:20px;
+}
+.timeline-line{
+  position:absolute;
+  left:12px;
+  top:0;
+  width:3px;
+  height:100%;
+  background:rgba(255,221,136,0.4);
+}
+.timeline-item{
+  position:relative;
+  cursor:pointer;
+  margin-bottom:26px;
+  transition:transform 0.22s;
+}
+.timeline-item:hover{
+  transform:translateX(4px);
+}
+.timeline-dot{
+  position:absolute;
+  left:-26px;
+  top:4px;
+  width:14px;
+  height:14px;
+  border-radius:50%;
+  background:#ffdd88;
+}
+.timeline-year{
+  font-size:18px;
+  font-weight:bold;
+  color:#ffdd88;
+}
+.timeline-desc{
+  display:none;
+  margin-top:8px;
+}
+.timeline-desc.show{
+  display:block;
+}
+
+/* ==========图片放大弹窗========== */
+.lightbox{
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100vw;
+  height:100vh;
+  background:rgba(0,0,0,0.85);
+  z-index:999;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+.lightbox.show{
+  display:flex;
+}
+.lightbox-img{
+  max-width:94%;
+  max-height:94vh;
+  border-radius:8px;
+}
+
+/* ==========知识点弹窗========== */
+.know-tag{
+  color:#73ccff;
+  text-decoration:underline dotted;
+  cursor:pointer;
+}
+.know-modal{
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100vw;
+  height:100vh;
+  background:rgba(0,0,0,0.65);
+  z-index:1000;
+  align-items:center;
+  justify-content:center;
+  padding:16px;
+}
+.know-modal.show{
+  display:flex;
+}
+.know-card{
+  width:100%;
+  max-width:540px;
+  background:#00284d;
+  border:1px solid #ffdd88;
+  border-radius:14px;
+  padding:26px;
+  position:relative;
+}
+.know-close{
+  position:absolute;
+  top:12px;
+  right:14px;
+  font-size:24px;
+  color:#ffdd88;
+  cursor:pointer;
+}
+#knowTitle{
+  color:#ffdd88;
+  margin-bottom:12px;
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>重庆交通大学 · 校史交互展</h1>
+  <div class="tabs">
+    <div class="tab-btn active" onclick="switchTab(0)">建校初心</div>
+    <div class="tab-btn" onclick="switchTab(1)">交通行业渊源</div>
+    <div class="tab-btn" onclick="switchTab(2)">两路建设精神</div>
+    <div class="tab-btn" onclick="switchTab(3)">校史时间轴</div>
+  </div>
+
+  <div class="box">
+    <div class="panel show">
+      <h2>🌱 建校初心</h2>
+      <img src="https://news.cqjtu.edu.cn/__local/D/21/18/C41DA58A6B400974E9D66C56EDC_1123D05D_16C50.jpg" onclick="openImg(this.src)">
+<p>     重庆交通大学始于国家基建急需的时代浪潮，建校核心初心立足国家交通建设空白、西南地区基建薄弱的时代背景，以“服务国家交通、扎根西部建设、培育实干人才”为根本使命。</p >
+<p>🏫 缘起：为修筑川藏公路而诞生</p>
+<p>     1951年，为打通内地与西藏的交通命脉，国家决定修建川藏公路。当时工程面临极为复杂的地质条件，专业技术人才极度匮乏。时任康藏（川藏）公路修建司令部政委的穰明德，向邓小平主持的西南军政委员会请示创办交通专业院校。1951年11月7日，重庆交通大学的前身——西南交通专科学校<span class="know-tag" onclick="openKnow('schoolOrigin')">西南交通专科学校</span>正式成立，穰明德任首任校长。校史馆里陈列着一幅泛黄的川藏公路地图，旁边是穰明德率队踏勘线路的照片和1951年建校后的第一张集体照。这些展品无声地诉说着：学校诞生于国家战略急需，第一批师生便奔赴川藏公路建设一线。</p>
+<p>     建校以来，学校始终坚守为国筑路、为民搭桥的办学初心，摒弃空谈治学，坚持面向工程、面向一线、面向国家重大基建需求办学，为中国公路、桥梁、水运工程建设源源不断输送专业人才，是西南交通基建人才培养的核心摇篮。</p >
+
+
+    </div>
+
+    <div class="panel">
+      <h2>🚄 交通行业渊源：伴交通而生，随基建而兴</h2>
+<p>    学校与生俱来带有深厚的交通行业基因，诞生于新中国交通建设起步阶段，与公路、桥梁、隧道、水运、山区交通工程建设深度绑定。</p >
+      <p>学校深耕<span class="know-tag" onclick="openKnow('mountainBridge')">山区桥梁</span>、内河航道科研，一代代师生奔赴西部重大工程一线，把科研成果落地祖国山河。</p >
+<p>🛣️ 与交通行业的深厚渊源</p>
+<p>     这种与生俱来的渊源，塑造了学校鲜明的交通特色，并延续至今。</p>
+<p>     精神传承：学校在参与川藏、青藏公路建设中，孕育并传承了“一不怕苦、二不怕死，顽强拼搏、甘当路石”的“两路”精神，凝练为“明德行远，交通天下”的校训，成为育人底色。
+行业贡献与科研实力：学校始终聚焦国家重大交通需求。其山区桥梁及隧道工程国家重点实验室成果支撑了25项“世界之最”的桥隧工程（如港珠澳大桥）；国家内河航道整治工程技术研究中心的技术支撑长江干线货运量跃居世界内河第一。此外，学校在高原冻土、沙漠土壤化等前沿领域也取得了重大突破。<img src="https://news.cqjtu.edu.cn/__local/8/AE/B0/EDF32411CE2D60CCE4CF17F8FFF_A9A58F7E_B282C.png" onclick="openImg(this.src)">
+人才培养：建校以来，学校已为国家培养了20余万名交通人才。杰出校友遍布行业，包括中国工程院院士郑皆连、港珠澳大桥总设计师孟凡超等，近30年我国建设的多数世界级大桥都有重庆交大校友的身影。</p>
+                <p>      依托重庆长江水运枢纽、西南山区路网建设的时代需求建校成长，从最初服务西南山区道路攻坚，到参与全国重大交通工程建设，学校的学科布局、科研方向、人才培养始终紧扣国家交通行业发展脉搏，是国内极少数深耕山区交通、复杂岩土、桥梁工程的特色高校，见证并参与了中国交通基建从落后到领跑世界的全过程。</p >
+<p>行业贡献</p>
+<p>     校史馆通过“水陆空轨”交通特色学科体系的展示，介绍了学校在不同时期为交通事业做出的贡献，并分享了孟凡超（港珠澳大桥总设计师）等杰出校友投身国家交通建设的故事。据统计，全国已有80位“十大桥梁人物”中22位出自重庆交大，校友主持或参与了港珠澳大桥、杭州湾大桥等近30座特大型桥梁建设。</p><img src="https://news.cqjtu.edu.cn/__local/E/E1/CA/F2F056E8C23599CC3FBD969115C_0DB7DBBE_A701F.png" onclick="openImg(this.src)">
+<p>🎓 从静态展览到立体育人</p>
+<p>     校史馆的功能早已超越静态参观。学校打造了集历史、文化、艺术、科技于一体的“两路”精神育人园，与校史展览馆、穰明德生平画传展矩阵发力，成为大思政课实践教学的重要基地。</p>
+<p>     在技术层面，校史馆引入了AI复原、VR系统、AR智慧导览等数字技术。虚拟讲解员“交小路”现身时，老校长穰明德的声音响起，黑白历史照片变成生动影像，沉浸式还原了“两路”建设场景，让参观者身临其境地感受70年前那场气壮山河的高原奋战。学校还开发了“感悟‘两路’精神传承红色基因”虚拟仿真实验系统，以师生连续七年重走川藏、青藏线的社会实践为蓝本，通过云端网络化和虚拟现实技术还原修筑历史场景。</p>
+<p>    从为一条路而建校，到成为支撑国家战略通道建设的科技力量，重庆交通大学的命运始终与中国交通事业紧密交织。</p>
+
+    </div>
+
+    <div class="panel">
+      <h2>🏔️ 两路建设精神：传承天路风骨，赓续奋斗底色</h2>
+      <p>    “一不怕苦、二不怕死，顽强拼搏、甘当路石，军民一家、民族团结”的两路精神，是<span class="know-tag" onclick="openKnow('twoRoad')">川藏、青藏两路</span>建设淬炼的宝贵红色精神财富，纳入中国共产党人精神谱系。作为因两路而生、因两路而兴的高校，重庆交通大学自建校之初便与两路建设血脉相融、初心同源，七十余载办学治校、育人报国的历程，正是两路精神代代赓续、生生不息的生动实践。</p ><p>一、根脉同源：建校初心，根植两路报国征程</p><img src="https://news.cqjtu.edu.cn/__local/3/40/44/D1F5EC66170BF55E88F99249EF0_2EB2032C_34542.jpg" onclick="openImg(this.src)">
+<p>      学校的诞生，本身就是两路建设的时代产物。1951年，为攻克康藏（川藏）公路建设技术难题、填补高原交通建设人才缺口，学校前身西南交通专科学校应运而生，专为国家高原交通建设育才筑基。学校首任校长穰明德，时任康藏公路筑路指挥部政委，亲身领衔天路建设攻坚，将筑路报国的初心使命深深镌刻在学校建校基因中。</p>
+<p>      建校初期，学校践行“边修路、边办学”的特殊使命，广大师生主动奔赴雪域高原，深度参与川藏公路的勘测、设计、施工全过程，在极端恶劣的高寒缺氧、地质复杂环境中，与筑路军民并肩作战，用专业技术破解工程难题，为两路顺利通车筑牢人才与技术根基，也让两路奋斗精神自此扎根校园。</p>
+<p>二、内核同频：精神相融，铸就交大办学底色</p>
+<p>     七十余载薪火相传，两路精神早已深度融入学校办学内核，与校园文化、校训校风高度契合，形成独一无二的精神标识。</p>
+
+<p>     一是“顽强拼搏、甘当路石”的奉献底色。两路建设者逢山开路、遇水架桥、默默奉献的铺路石品格，凝练为学校甘当路石，进无止境的办学精神，成为一代代交大人的价值追求。不求虚名、默默深耕交通基建领域，甘愿做国家交通事业发展的基石，诠释“功成不必在我，功成必定有我”的担当。</p><img src="https://news.cqjtu.edu.cn/__local/7/69/93/88857DDEE34EF6AD2370F86495A_ECA4F532_17AE1.jpg" onclick="openImg(this.src)">
+
+<p>     二是“一不怕苦、二不怕死”的奋斗风骨。高原筑路不畏艰险、攻坚克难、无畏牺牲的奋斗品质，塑造了学校“严谨求实，团结进取”的优良校风。一代代师生传承不畏艰险、敢闯敢拼的精神，深耕山区交通、高原基建、深水航道等艰苦领域，直面工程难题、勇攀科研高峰。</p>
+
+<p>     三是“军民一家、民族团结”的家国格局。两路建设凝聚军民同心、各族携手的磅礴力量，筑牢边疆稳定与发展根基。这与学校校训明德行远，交通天下深度呼应，从当年打通边疆交通命脉、促进民族团结，到如今服务交通强国战略、联通家国四方，始终承载着联通山海、赋能发展、报国利民的初心使命。</p>
+<p>三、育人赓续：以史育人，筑牢精神传承阵地</p>
+<p>     学校始终将两路精神作为核心思政育人资源，打造系统化、沉浸式红色育人体系，让两路精神可感、可学、可践行。学校建成两路精神育人园核心思政阵地，依托VR、AR等智慧技术，全景还原两路建设壮阔历程，打造常态化红色教育课堂。同时，打造“两路”先锋一站式学生社区、组建银发宣讲团、开设两路精神专题校本课程，将校史与两路史深度融合，让红色基因浸润育人全过程。</p>
+<p>四、知行致远：薪火相传，续写新时代天路华章</p>
+<p>     七十余载弦歌不辍，两路精神从未停留在历史记忆，而是转化为代代交大人的实干行动。学校组建“两路·一梦”青年寻访团，师生重走川藏天路、寻访筑路遗迹、传承筑路初心。无数交大学子毕业后主动奔赴雪域高原、偏远山区、边疆一线，投身川藏铁路、高原公路、山区隧道、水运基建等国家重大工程。</p>
+<p>     从竹棚办学筑路报国，到新时代交通强国建功立业，变的是办学条件与建设场景，不变的是交大人根植血脉的两路初心。重庆交通大学始终以两路精神为立校之魂、育人之本、兴校之基，持续为国家交通基础设施建设、边疆发展、民族复兴培育栋梁之才，持续书写新时代“交通报国、实干担当”的崭新答卷。</p>
+<p>     两路淬炼精神，初心照亮前路。重庆交通大学七十余年发展史，就是一部扎根两路、传承两路、践行两路的奋斗史。两路精神是学校的精神原点，更是学校奔赴未来、逐梦致远的永恒精神动力。</p>
+                <p>     学校深度参与川藏、青藏两路建设配套科研与人才支撑，一代代重交师生扎根高原、深入深山，攻克高寒、冻土、险峰筑路难题。六十余年办学历程中，学校将两路建设的实干、坚守、奉献精神融入育人内核，始终践行“严谨、求实、团结、进取”校训，以路育人、以桥铸魂，让艰苦奋斗、扎根一线、为国基建的精神代代传承。</p >
+
+    </div>
+
+    <div class="panel">
+      <h2>📜 校史时间轴</h2>
+      <div class="timeline-wrap">
+        <div class="timeline-line"></div>
+
+        <div class="timeline-item" onclick="toggleTime(0)">
+          <div class="timeline-dot"></div>
+          <div class="timeline-year">1951 起源</div>
+          <div class="timeline-desc">
+            <p>为建设川藏公路急需，邓小平领导的西南军政委员会创办西南交通专科学校<span class="know-tag" onclick="openKnow('schoolOrigin')">西南交通专科学校</span>，首任校长穰明德，开启办学历程。</p >
+<img src="https://b0.bdstatic.com/bd3acd9293035ed70f8d13622de13dfa.jpg" onclick="openImg(this.src)">
+          </div>
+        </div>
+
+        <div class="timeline-item" onclick="toggleTime(1)">
+          <div class="timeline-dot"></div>
+          <div class="timeline-year">1952——1958 早期更名</div>
+          <div class="timeline-desc">
+            <p>先后更名为西南交通学校、重庆公路学校、交通部西南公路学校、交通部重庆公路工程学校、四川省重庆公路工程学校。</p ><img src="https://news.cqjtu.edu.cn/__local/D/34/1D/7A4AF60CC2A659D3A60803B8DE7_B5E8B9E5_7EE4C.jpg" onclick="openImg(this.src)">
+
+          </div>
+        </div>
+
+        <div class="timeline-item" onclick="toggleTime(2)">
+          <div class="timeline-dot"></div>
+          <div class="timeline-year">1960 开启本科教育</div>
+          <div class="timeline-desc">
+            <p>成都工学院土木系、武汉水运学院水工系、四川冶金学院冶金系迁入，共同组建重庆交通学院，正式开启本科教育。</p >
+          </div>
+        </div>
+
+<div class="timeline-item" onclick="toggleTime(3)">
+          <div class="timeline-dot"></div>
+          <div class="timeline-year">1971 并校</div>
+          <div class="timeline-desc">
+            <p>重庆交通学院并入重庆建筑工程学院。</p >
+          </div>
+        </div>
+
+<div class="timeline-item" onclick="toggleTime(4)">
+          <div class="timeline-dot"></div>
+          <div class="timeline-year">1979 恢复建制</div>
+          <div class="timeline-desc">
+            <p>恢复重庆交通学院建制，划归交通部直接管理；重庆航务工程学校并入，学校本部迁至渝中区黄沙溪。</p >
+<img src="https://bkimg.cdn.bcebos.com/pic/fd039245d688d43f87945711be56c51b0ef41ad58db5" onclick="openImg(this.src)">
+
+          </div>
+        </div>
+
+<div class="timeline-item" onclick="toggleTime(5)">
+          <div class="timeline-dot"></div>
+          <div class="timeline-year">1984——1986 回归与提升</div>
+          <div class="timeline-desc">
+            <p>1984年，学校本部迁回南岸区七公里。1985年，获批成为国家第三批硕士学位授予单位。1986年，交通部西南水运工程科学研究所并入。</p ><img src="http://dag.cqjtu.edu.cn/__local/C/76/62/E49B453E5E3ECF6D480E10C109E_E4D3E80E_21A0B.jpg" onclick="openImg(this.src)">
+          </div>
+        </div>
+
+<div class="timeline-item" onclick="toggleTime(6)">
+          <div class="timeline-dot"></div>
+          <div class="timeline-year">1999——2000 管理体制转变</div>
+          <div class="timeline-desc">
+            <p>1999年，重庆交通学校（河运校）划归学校。2000年，学校由交通部划转重庆市管理，实行“中央与地方共建、以重庆市为主”的管理体制。</p ><img src="https://mmbiz.qpic.cn/mmbiz_jpg/NRmzlJjpMFI16zzrxoB2FHrBv7g8oqjBNGTKPwib0eAVFwTC53Wf5vyibCOgKtElP16c9vOSO7Gics3jSd3MG94UQ/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1#imgIndex=2" onclick="openImg(this.src)">
+          </div>
+        </div>
+
+
+<div class="timeline-item" onclick="toggleTime(7)">
+          <div class="timeline-dot"></div>
+          <div class="timeline-year">2006 更名重庆交通大学</div>
+          <div class="timeline-desc">
+            <p>正式更名为重庆交通大学，学科不断拓展，围绕<span class="know-tag" onclick="openKnow('mountainBridge')">山区桥梁</span>持续科研攻坚。同年增列为博士学位授予单位，实现办学层次的历史性跨越。</p >
+          </div>
+        </div>
+<div class="timeline-item" onclick="toggleTime(8)">
+          <div class="timeline-dot"></div>
+          <div class="timeline-year">2011 校区拓展</div>
+          <div class="timeline-desc">
+            <p>双福校区（今科学城校区）一期工程建成，学校形成双校区办学格局；同年获批设立“国家内河航道整治工程技术研究中心”。</p ><img src="https://img1.baidu.com/it/u=93577989,726796247&fm=253&fmt=auto&app=120&f=JPEG?w=800&h=500" onclick="openImg(this.src)">
+
+          </div>
+        </div>
+
+<div class="timeline-item" onclick="toggleTime(9)">
+          <div class="timeline-dot"></div>
+          <div class="timeline-year">2016 部市共建</div>
+          <div class="timeline-desc">
+            <p>成为交通运输部与重庆市人民政府共建高校，交通特色与优势进一步强化。</p ><img src="https://pic.rmb.bdstatic.com/bjh/3eafdce685/241218/a9bd8626cae9416ca41b9cd4d67235ae.jpeg" onclick="openImg(this.src)">
+          </div>
+        </div>
+
+<div class="timeline-item" onclick="toggleTime(10)">
+          <div class="timeline-dot"></div>
+          <div class="timeline-year">2021 七十周年</div>
+          <div class="timeline-desc">
+            <p>举行建校70周年纪念大会，累计培养人才20余万名。</p ><img src="https://img0.baidu.com/it/u=2546085876,1473054947&fm=253&fmt=auto&app=138&f=JPEG?w=821&h=500" onclick="openImg(this.src)">
+          </div>
+        </div>
+
+<div class="timeline-item" onclick="toggleTime(11)">
+          <div class="timeline-dot"></div>
+          <div class="timeline-year">现今 现状</div>
+          <div class="timeline-desc">
+            <p>学校拥有南岸、科学城两个校区，占地近2900亩；形成5个一级学科博士点、2个博士专业学位授权点，土木工程等4个博士后科研流动站；建成山区桥梁及隧道工程国家重点实验室等3个国家级科研平台，工程学科入选ESI全球前1%，建设高水平交通大学。</p ><img src="https://q3.itc.cn/q_70/images03/20251218/47f9e647a6aa460f8354b1aee51988ae.png" onclick="openImg(this.src)">
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 知识点弹窗 -->
+<div class="know-modal" id="knowModal">
+  <div class="know-card">
+    <span class="know-close" onclick="closeKnow()">×</span>
+    <h3 id="knowTitle"></h3>
+    <div id="knowText"></div>
+  </div>
+</div>
+
+<!-- 图片放大弹窗 -->
+<div class="lightbox" id="lightBox" onclick="closeImg()">
+  <img class="lightbox-img" id="bigImg">
+</div>
+
+<script>
+let knowData;
+document.addEventListener('DOMContentLoaded', function(){
+  knowData = {
+    schoolOrigin:{
+      title:"西南交通专科学校",
+      text:"1951年建校，是重庆交通大学的办学前身，建校目标是为西南地区培养道路桥梁紧缺技术人才。"
+    },
+    mountainBridge:{
+      title:"山区桥梁",
+      text:"重庆交大王牌研究方向，针对西部高山峡谷复杂地质，研发大跨、高墩桥梁成套技术，服务西部交通建设。"
+    },
+    twoRoad:{
+      title:"川藏、青藏两路",
+      text:"新中国早期高原超级工程，孕育了一不怕苦二不怕死的两路精神，也是学校重要精神源泉。"
+    }
+  };
+});
+
+// 标签切换
+function switchTab(idx){
+  const panels = document.querySelectorAll(".panel");
+  const btns = document.querySelectorAll(".tab-btn");
+  panels.forEach(p=>p.classList.remove("show"));
+  btns.forEach(b=>b.classList.remove("active"));
+  panels[idx].classList.add("show");
+  btns[idx].classList.add("active");
+}
+
+// 图片放大
+function openImg(src){
+  document.getElementById("bigImg").src = src;
+  document.getElementById("lightBox").classList.add("show");
+}
+function closeImg(){
+  document.getElementById("lightBox").classList.remove("show");
+}
+
+// 时间轴展开收起
+function toggleTime(i){
+  const arr = document.querySelectorAll(".timeline-desc");
+  arr[i].classList.toggle("show");
+}
+
+// 知识点弹窗
+function openKnow(key){
+  const d = knowData[key];
+  document.getElementById("knowTitle").innerText = d.title;
+  document.getElementById("knowText").innerText = d.text;
+  document.getElementById("knowModal").classList.add("show");
+}
+function closeKnow(){
+  document.getElementById("knowModal").classList.remove("show");
+}
+</script>
+</body>
+</html>
